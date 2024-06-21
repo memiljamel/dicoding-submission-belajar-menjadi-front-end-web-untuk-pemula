@@ -20,11 +20,11 @@ function generateId() {
 
 function generateBookObject(id, title, author, year, isComplete) {
   return {
-    id,
-    title,
-    author,
-    year,
-    isComplete,
+    id: String(id),
+    title: String(title),
+    author: String(author),
+    year: Number(year),
+    isComplete: Boolean(isComplete),
   };
 }
 
@@ -159,11 +159,11 @@ function addBook() {
   const checkbox = document.getElementById('inputBookIsComplete').checked;
 
   if (bookId !== undefined) {
-    const bookTarget = findBookIndex(Number(bookId));
+    const bookTarget = findBookIndex(bookId);
 
     if (bookTarget === -1) return;
 
-    books[bookTarget] = generateBookObject(Number(bookId), title, author, year, checkbox);
+    books[bookTarget] = generateBookObject(bookId, title, author, year, checkbox);
     delete inputBookForm.dataset.editingId;
   } else {
     const id = generateId();
@@ -287,6 +287,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener(SAVED_EVENT, function () {
+  console.log(books);
+
   Swal.fire({
     title: 'Disimpan!',
     text: 'Data Anda telah disimpan.',
